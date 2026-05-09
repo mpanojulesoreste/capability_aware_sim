@@ -1,8 +1,8 @@
 # Capability-Aware Multi-Robot Sim
 
-MAE 577 final project — Princeton, Spring 2026.
+MAE 577 final project
 
-Existence proof that multi-robot coordination algorithms produce **measurably
+Proof that multi-robot coordination algorithms produce **measurably
 different behavior** when they treat user physical capability (reach, mobility,
 field of view) as a first-class variable in task allocation.
 
