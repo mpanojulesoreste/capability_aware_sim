@@ -137,11 +137,18 @@ def plot_sweep_chart(rows, save_path="sweep_chart.png"):
     One line per allocator.  Each point is the mean across seeds for that profile.
     """
     metrics_def = [
-        ("total_time",           "Total time (s)",        "↓"),
-        ("repositions",          "User repositions",      "↓"),
-        ("strong_side_fraction", "Strong-side fraction",  "↑"),
-        ("mean_handoff_excess",  "Mean handoff excess (m)", "↓"),
+        ("total_time",           "Total time (s)",          "↓",  None,   None),
+        ("repositions",          "User repositions",        "↓",  0.03,  -0.10),
+        ("strong_side_fraction", "Strong-side fraction",    "↑",  None,   None),
+        ("mean_handoff_excess",  "Mean handoff excess (m)", "↓",  0.003, -0.01),
     ]
+
+    ALLOC_STYLE = {
+        "baseline":   dict(linestyle="-",  marker="o", label="Baseline (solid)"),
+        "adaptive":   dict(linestyle="--", marker="s", label="Adaptive (dashed)"),
+        "stigmergic": dict(linestyle=":",  marker="^", label="Stigmergic (dotted)"),
+    }
+    ZERO_OFFSET = {"baseline": 0, "adaptive": 1, "stigmergic": 2}
 
     profile_asym = {}
     for r in rows:
@@ -158,7 +165,9 @@ def plot_sweep_chart(rows, save_path="sweep_chart.png"):
         fontsize=11, y=0.99,
     )
 
-    for ax, (metric, title, direction) in zip(axes.flat, metrics_def):
+    for ax, (metric, title, direction, eps, ylim_bottom) in zip(axes.flat, metrics_def):
+        zero_panel = eps is not None
+
         for alloc in ["baseline", "adaptive", "stigmergic"]:
             y_means, y_mins, y_maxs = [], [], []
             for profile in profiles_sorted:
@@ -172,13 +181,31 @@ def plot_sweep_chart(rows, save_path="sweep_chart.png"):
                     y_mins.append(float("nan"))
                     y_maxs.append(float("nan"))
 
-            color = ALLOCATOR_COLORS[alloc]
-            label = ALLOCATOR_LABELS[alloc]
-            ax.plot(x_vals, y_means, "o-", color=color, label=label,
-                    linewidth=1.8, markersize=5)
+            plot_y = y_means
+            if zero_panel and all(v == 0.0 for v in y_means if not np.isnan(v)):
+                offset = -eps * ZERO_OFFSET[alloc]
+                plot_y = [v + offset if not np.isnan(v) else v for v in y_means]
+
+            color  = ALLOCATOR_COLORS[alloc]
+            style  = ALLOC_STYLE[alloc]
+            ax.plot(x_vals, plot_y,
+                    linestyle=style["linestyle"],
+                    marker=style["marker"],
+                    color=color,
+                    label=style["label"],
+                    linewidth=2.0,
+                    markersize=7)
             if alloc == "stigmergic":
-                ax.fill_between(x_vals, y_mins, y_maxs,
-                                color=color, alpha=0.15)
+                ax.fill_between(x_vals, y_mins, y_maxs, color=color, alpha=0.15)
+
+        if zero_panel:
+            ax.set_ylim(bottom=ylim_bottom)
+            ax.axhline(0, color="#999", linewidth=0.8, linestyle="--", zorder=1)
+            ax.annotate(
+                "Adaptive & Stigmergic = 0 across all profiles",
+                xy=(0.55, 0.12), xycoords="axes fraction",
+                fontsize=9, color="#555555", style="italic",
+            )
 
         ax.set_xlabel("Reach asymmetry  (right − left, m)", fontsize=9)
         ax.set_title(f"{title}  {direction}", fontsize=10)
