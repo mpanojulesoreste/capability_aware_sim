@@ -1,0 +1,109 @@
+{
+  "profile": "mild_asymmetric",
+  "reach_right": 0.6,
+  "reach_left": 0.4,
+  "allocator": "stigmergic",
+  "seed": 42,
+  "summary": {
+    "label": "stigmergic",
+    "total_time": 35.55,
+    "repositions": 0,
+    "unreachable": 0,
+    "deliveries": 5,
+    "human_idle_time": 0.882,
+    "robot_idle_time": 0.0,
+    "concurrent_activity": 0.118,
+    "functional_delay": 0.0,
+    "strong_side_handoff_count": 5,
+    "weak_side_handoff_count": 0,
+    "strong_side_fraction": 1.0,
+    "mean_handoff_distance_from_user": 0.528,
+    "mean_handoff_excess": 0.0,
+    "max_handoff_excess": 0.0,
+    "total_robot_distance": 63.2258,
+    "mean_task_duration": 0.0,
+    "task_completion_variance": 0.0
+  },
+  "tasks": [
+    {
+      "task_id": 0,
+      "robot_id": 1,
+      "pickup_time": 35.600000000000115,
+      "dropoff_time": 35.600000000000115,
+      "handoff_pos": [
+        1.0,
+        1.472
+      ],
+      "reachable": true,
+      "side": "right",
+      "dist_from_boundary": 0.0,
+      "profile": "mild_asymmetric",
+      "allocator": "stigmergic",
+      "seed": 42
+    },
+    {
+      "task_id": 1,
+      "robot_id": 0,
+      "pickup_time": 22.550000000000185,
+      "dropoff_time": 22.550000000000185,
+      "handoff_pos": [
+        1.0,
+        1.472
+      ],
+      "reachable": true,
+      "side": "right",
+      "dist_from_boundary": 0.0,
+      "profile": "mild_asymmetric",
+      "allocator": "stigmergic",
+      "seed": 42
+    },
+    {
+      "task_id": 2,
+      "robot_id": 0,
+      "pickup_time": 6.949999999999983,
+      "dropoff_time": 6.949999999999983,
+      "handoff_pos": [
+        1.0,
+        1.472
+      ],
+      "reachable": true,
+      "side": "right",
+      "dist_from_boundary": 0.0,
+      "profile": "mild_asymmetric",
+      "allocator": "stigmergic",
+      "seed": 42
+    },
+    {
+      "task_id": 3,
+      "robot_id": 2,
+      "pickup_time": 7.349999999999982,
+      "dropoff_time": 7.349999999999982,
+      "handoff_pos": [
+        1.0,
+        1.472
+      ],
+      "reachable": true,
+      "side": "right",
+      "dist_from_boundary": 0.0,
+      "profile": "mild_asymmetric",
+      "allocator": "stigmergic",
+      "seed": 42
+    },
+    {
+      "task_id": 4,
+      "robot_id": 1,
+      "pickup_time": 6.249999999999986,
+      "dropoff_time": 6.249999999999986,
+      "handoff_pos": [
+        1.0,
+        1.472
+      ],
+      "reachable": true,
+      "side": "right",
+      "dist_from_boundary": 0.0,
+      "profile": "mild_asymmetric",
+      "allocator": "stigmergic",
+      "seed": 42
+    }
+  ]
+}
